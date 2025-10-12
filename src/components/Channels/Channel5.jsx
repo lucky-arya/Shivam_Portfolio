@@ -188,9 +188,17 @@ const Channel5 = () => {
         body: JSON.stringify(formData),
       });
 
+      // Check if response is ok
+      if (!response.ok) {
+        // If API is not available (development without backend running)
+        if (response.status === 404 || response.status === 502) {
+          throw new Error('API endpoint not available');
+        }
+      }
+
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.success) {
         setSubmitStatus({ type: 'success', message: 'Message sent successfully! I\'ll get back to you soon! 🎉' });
         setFormData({ name: '', email: '', message: '' });
         setErrors({ name: '', email: '', message: '' });
@@ -198,7 +206,12 @@ const Channel5 = () => {
         setSubmitStatus({ type: 'error', message: data.message || 'Failed to send message. Please try again.' });
       }
     } catch (error) {
-      setSubmitStatus({ type: 'error', message: 'Failed to send message. Please try again later.' });
+      console.error('Contact form error:', error);
+      // Better error message for development
+      const errorMessage = error.message === 'API endpoint not available' 
+        ? 'Backend server is not running. Please start the server with "npm run server" or the form will work once deployed to Vercel.'
+        : 'Failed to send message. Please try again later.';
+      setSubmitStatus({ type: 'error', message: errorMessage });
     } finally {
       setIsSubmitting(false);
     }

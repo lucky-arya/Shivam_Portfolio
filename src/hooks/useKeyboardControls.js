@@ -8,38 +8,44 @@ export const useKeyboardControls = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
+      // Ignore keyboard shortcuts when typing in input fields
+      const isTyping = ['INPUT', 'TEXTAREA'].includes(e.target.tagName);
+      
       // Only Left/Right arrows for channel switching
       // Up/Down arrows are handled by individual components for navigation/scrolling
-      if (['ArrowRight', 'ArrowLeft'].includes(e.key)) {
+      if (['ArrowRight', 'ArrowLeft'].includes(e.key) && !isTyping) {
         e.preventDefault();
       }
 
       switch(e.key) {
         case 'ArrowRight':
-          handleChannelSwitch('up');
+          if (!isTyping) handleChannelSwitch('up');
           break;
         case 'ArrowLeft':
-          handleChannelSwitch('down');
+          if (!isTyping) handleChannelSwitch('down');
           break;
         case ' ':
-          e.preventDefault();
-          togglePower();
+          // Don't toggle power when typing in form fields
+          if (!isTyping) {
+            e.preventDefault();
+            togglePower();
+          }
           break;
         case 'Escape':
-          toggleMute();
+          if (!isTyping) toggleMute();
           break;
         case '1':
         case '2':
         case '3':
         case '4':
         case '5':
-          if (state.isPoweredOn) {
+          if (state.isPoweredOn && !isTyping) {
             goToChannel(parseInt(e.key));
           }
           break;
         case '0':
           // Secret channel 0 - mini game
-          if (state.isPoweredOn) {
+          if (state.isPoweredOn && !isTyping) {
             goToChannel(0);
           }
           break;
