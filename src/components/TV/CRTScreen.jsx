@@ -8,6 +8,7 @@ import PowerAnimation from '../Effects/PowerAnimation';
 import ChannelIndicator from '../UI/ChannelIndicator';
 import VolumeBar from '../UI/VolumeBar';
 import LandingScreen from '../UI/LandingScreen';
+import HomeScreen from '../UI/HomeScreen';
 import Channel1 from '../Channels/Channel1';
 import Channel2 from '../Channels/Channel2';
 import Channel3 from '../Channels/Channel3';
@@ -17,7 +18,7 @@ import Channel404 from '../Channels/Channel404';
 import Channel0 from '../Channels/Channel0';
 
 const CRTScreen = () => {
-  const { state, togglePower } = useTVContext();
+  const { state, togglePower, switchChannel } = useTVContext();
   const { playSound, stopSound } = useAudioContext();
 
   React.useEffect(() => {
@@ -48,6 +49,8 @@ const CRTScreen = () => {
     if (!state.isPoweredOn) return null;
 
     switch (state.currentChannel) {
+      case 99:
+        return <HomeScreen onChannelSelect={(channelId) => switchChannel(channelId)} />;
       case 0:
         return <Channel0 />;
       case 1:
@@ -63,7 +66,7 @@ const CRTScreen = () => {
       case 404:
         return <Channel404 />;
       default:
-        return <Channel1 />;
+        return <HomeScreen onChannelSelect={(channelId) => switchChannel(channelId)} />;
     }
   };
 
@@ -101,11 +104,17 @@ const CRTScreen = () => {
               {renderChannel()}
             </div>
             
-            {/* CRT Effects Overlays */}
-            {state.isPoweredOn && (
+            {/* CRT Effects Overlays - Toggle based on settings */}
+            {state.isPoweredOn && state.crtEffectsEnabled && (
               <>
                 <Scanlines />
                 <VHSDistortion />
+              </>
+            )}
+            
+            {/* Always show these UI elements when powered on */}
+            {state.isPoweredOn && (
+              <>
                 <ChannelIndicator />
                 <VolumeBar />
               </>

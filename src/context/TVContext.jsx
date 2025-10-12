@@ -5,13 +5,14 @@ const TVContext = createContext(undefined);
 export const TVProvider = ({ children }) => {
   const [state, setState] = useState({
     isPoweredOn: false,
-    currentChannel: 1,
+    currentChannel: 99, // Start at home screen (channel 99)
     isTransitioning: false,
     volume: 0.5,
     isMuted: false,
     lastInteraction: Date.now(),
     screenMode: 'color',
     isFirstBoot: true,
+    crtEffectsEnabled: true, // New: CRT effects toggle
   });
 
   const switchChannel = useCallback((channelNumber) => {
@@ -34,12 +35,16 @@ export const TVProvider = ({ children }) => {
   }, [state.isTransitioning]);
 
   const togglePower = useCallback(() => {
-    setState(prev => ({
-      ...prev,
-      isPoweredOn: !prev.isPoweredOn,
-      lastInteraction: Date.now(),
-      isFirstBoot: false, // After first power-on, no longer first boot
-    }));
+    setState(prev => {
+      const willPowerOn = !prev.isPoweredOn;
+      return {
+        ...prev,
+        isPoweredOn: willPowerOn,
+        currentChannel: willPowerOn ? 99 : prev.currentChannel, // Go to home screen when powering on
+        lastInteraction: Date.now(),
+        isFirstBoot: false, // After first power-on, no longer first boot
+      };
+    });
   }, []);
 
   const setVolume = useCallback((volume) => {
@@ -82,6 +87,23 @@ export const TVProvider = ({ children }) => {
     }));
   }, []);
 
+  const toggleCRTEffects = useCallback(() => {
+    setState(prev => ({
+      ...prev,
+      crtEffectsEnabled: !prev.crtEffectsEnabled,
+      lastInteraction: Date.now(),
+    }));
+  }, []);
+
+  const navigateInteractive = useCallback((action) => {
+    // Dispatch navigation event for interactive elements (buttons, links, etc.)
+    window.dispatchEvent(new CustomEvent('remoteNavigation', { detail: action }));
+    setState(prev => ({
+      ...prev,
+      lastInteraction: Date.now(),
+    }));
+  }, []);
+
   return (
     <TVContext.Provider
       value={{
@@ -93,6 +115,8 @@ export const TVProvider = ({ children }) => {
         updateLastInteraction,
         toggleScreenMode,
         sendDirectionalInput,
+        toggleCRTEffects,
+        navigateInteractive,
       }}
     >
       {children}

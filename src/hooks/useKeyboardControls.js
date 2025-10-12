@@ -8,18 +8,17 @@ export const useKeyboardControls = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      // Prevent default for arrow keys to avoid scrolling
-      if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+      // Only Left/Right arrows for channel switching
+      // Up/Down arrows are handled by individual components for navigation/scrolling
+      if (['ArrowRight', 'ArrowLeft'].includes(e.key)) {
         e.preventDefault();
       }
 
       switch(e.key) {
         case 'ArrowRight':
-        case 'ArrowUp':
           handleChannelSwitch('up');
           break;
         case 'ArrowLeft':
-        case 'ArrowDown':
           handleChannelSwitch('down');
           break;
         case ' ':

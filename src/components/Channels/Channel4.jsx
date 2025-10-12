@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const Channel4 = () => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Handle keyboard scrolling
+    const handleKeyPress = (e) => {
+      if (!containerRef.current) return;
+      
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        containerRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        containerRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+      }
+    };
+
+    // Handle remote directional input
+    const handleRemoteInput = (e) => {
+      if (!containerRef.current) return;
+      
+      const direction = e.detail; // e.detail is the direction string directly
+      if (direction === 'up') {
+        containerRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+      } else if (direction === 'down') {
+        containerRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('remoteDirectionalInput', handleRemoteInput);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('remoteDirectionalInput', handleRemoteInput);
+    };
+  }, []);
+
   const experiences = [
     {
       role: "Senior Full-Stack Developer",
@@ -35,7 +72,10 @@ const Channel4 = () => {
   ];
 
   return (
-    <div className="w-full h-full bg-gradient-to-b from-red-900 via-gray-900 to-black p-4 sm:p-6 md:p-8 overflow-auto">
+    <div 
+      ref={containerRef}
+      className="w-full h-full bg-gradient-to-b from-red-900 via-gray-900 to-black p-4 sm:p-6 md:p-8 overflow-auto scroll-smooth"
+    >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}

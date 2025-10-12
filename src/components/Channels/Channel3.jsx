@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const Channel3 = () => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Handle keyboard scrolling
+    const handleKeyPress = (e) => {
+      if (!containerRef.current) return;
+      
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        containerRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        containerRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+      }
+    };
+
+    // Handle remote directional input
+    const handleRemoteInput = (e) => {
+      if (!containerRef.current) return;
+      
+      const direction = e.detail; // e.detail is the direction string directly
+      if (direction === 'up') {
+        containerRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+      } else if (direction === 'down') {
+        containerRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('remoteDirectionalInput', handleRemoteInput);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('remoteDirectionalInput', handleRemoteInput);
+    };
+  }, []);
+
   const skills = {
     "Frontend": ["HTML", "CSS", "JavaScript", "React",  "Tailwind CSS"],
     "Backend": ["Node.js", "Express", "REST APIs"],
@@ -12,7 +49,10 @@ const Channel3 = () => {
   };
 
   return (
-    <div className="w-full h-full bg-blue-900 p-3 sm:p-4 md:p-6 overflow-auto font-mono">
+    <div 
+      ref={containerRef}
+      className="w-full h-full bg-blue-900 p-3 sm:p-4 md:p-6 overflow-auto scroll-smooth font-mono"
+    >
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

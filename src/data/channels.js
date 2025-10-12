@@ -10,7 +10,7 @@ export const channels = [
   {
     id: 1,
     name: 'About Me',
-    title: "LATE NIGHT WITH [YOUR NAME]",
+    title: "LATE NIGHT WITH Shivam Kumar",
     subtitle: "Tonight's special guest... also [Your Name]!",
     description: 'A vintage talk show format showcasing who I am, my journey, and what drives me.',
     theme: 'talk-show',
@@ -26,7 +26,7 @@ export const channels = [
   {
     id: 3,
     name: 'Skills',
-    title: '⚡ TECHNICAL SKILLS DATABASE',
+    title: '⚡ TECHNICAL SKILLS ',
     subtitle: 'Page 101 • Last updated: October 2025',
     description: 'Teletext-style display of technical skills and expertise.',
     theme: 'teletext',

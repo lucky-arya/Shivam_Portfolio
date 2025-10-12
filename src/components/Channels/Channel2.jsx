@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const Channel2 = () => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Handle keyboard scrolling
+    const handleKeyPress = (e) => {
+      if (!containerRef.current) return;
+      
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        containerRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        containerRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+      }
+    };
+
+    // Handle remote directional input
+    const handleRemoteInput = (e) => {
+      if (!containerRef.current) return;
+      
+      const direction = e.detail; // e.detail is the direction string directly
+      if (direction === 'up') {
+        containerRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+      } else if (direction === 'down') {
+        containerRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('remoteDirectionalInput', handleRemoteInput);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('remoteDirectionalInput', handleRemoteInput);
+    };
+  }, []);
+
   const projects = [
     {
       name: "Amazing Project Alpha",
@@ -24,7 +61,10 @@ const Channel2 = () => {
   ];
 
   return (
-    <div className="w-full h-full bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 p-4 sm:p-6 md:p-8 overflow-auto">
+    <div 
+      ref={containerRef}
+      className="w-full h-full bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 p-4 sm:p-6 md:p-8 overflow-auto scroll-smooth"
+    >
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -60,10 +100,10 @@ const Channel2 = () => {
               </div>
 
               <div className="bg-yellow-300 border-2 sm:border-4 border-black p-3 sm:p-4 mb-3 sm:mb-4">
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">✨ FEATURES:</h3>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-black">FEATURES:</h3>
                 <ul className="space-y-1">
                   {project.features.map((feature, i) => (
-                    <li key={i} className="text-sm sm:text-base md:text-xl font-semibold">✓ {feature}</li>
+                    <li key={i} className="text-sm sm:text-base md:text-xl font-semibold text-black">✓ {feature}</li>
                   ))}
                 </ul>
               </div>
