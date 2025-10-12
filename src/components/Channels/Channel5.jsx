@@ -179,7 +179,8 @@ const Channel5 = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      // Use relative path for API - works both locally (with proxy) and on Vercel
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
