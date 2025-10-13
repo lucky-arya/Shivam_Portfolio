@@ -10,7 +10,7 @@ const TVRemote = () => {
   const { handleChannelSwitch, goToChannel } = useChannelSwitcher();
   const dragControls = useDragControls();
 
-  const channels = [1, 2, 3, 4, 5];
+  const channels = [1, 2, 3, 4, 5, 6];
 
   // Check if current channel is a game channel (Channel 0 - Snake Game)
   const isGameChannel = state.currentChannel === 0;
@@ -84,7 +84,7 @@ const TVRemote = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="fixed right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 cursor-move touch-none"
+          className="fixed right-2 sm:right-4 bottom-4 sm:bottom-8 md:bottom-12 z-50 cursor-move touch-none"
           whileHover={{ scale: 1.02 }}
           whileDrag={{ scale: 1.05, cursor: 'grabbing' }}
         >
@@ -112,10 +112,10 @@ const TVRemote = () => {
             {/* Hide/Show Toggle */}
             <button
               onClick={() => setIsVisible(false)}
-              className="absolute -left-4 sm:-left-6 md:-left-8 top-1/2 -translate-y-1/2 bg-gray-700 hover:bg-gray-600 text-white px-1 sm:px-1.5 py-2 sm:py-3 rounded-l-lg text-[10px] sm:text-xs touch-manipulation"
+              className="absolute -left-4 sm:-left-6 md:-left-8 bottom-1/3 bg-gray-700 hover:bg-gray-600 text-white px-1 sm:px-1.5 py-2 sm:py-3 rounded-l-lg text-[10px] sm:text-xs touch-manipulation"
               title="Hide Remote"
             >
-              ◀
+              ▶
             </button>
 
             {/* Power Button */}
@@ -360,7 +360,7 @@ const TVRemote = () => {
           initial={{ x: 100 }}
           animate={{ x: 0 }}
           onClick={() => setIsVisible(true)}
-          className="fixed right-0 top-1/2 -translate-y-1/2 bg-gray-700 hover:bg-gray-600 text-white px-1.5 sm:px-2 md:px-3 py-3 sm:py-4 md:py-6 rounded-l-lg text-[10px] sm:text-xs md:text-sm font-bold shadow-xl z-50 touch-manipulation"
+          className="fixed right-0 bottom-8 sm:bottom-12 md:bottom-16 bg-gray-700 hover:bg-gray-600 text-white px-1.5 sm:px-2 md:px-3 py-3 sm:py-4 md:py-6 rounded-l-lg text-[10px] sm:text-xs md:text-sm font-bold shadow-xl z-50 touch-manipulation"
           title="Show Remote"
         >
           <div className="transform -rotate-90 whitespace-nowrap">REMOTE</div>

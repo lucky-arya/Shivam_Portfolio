@@ -6,6 +6,7 @@ export const TVProvider = ({ children }) => {
   const [state, setState] = useState({
     isPoweredOn: false,
     currentChannel: 99, // Start at home screen (channel 99)
+    targetChannel: 99, // Channel we're switching to
     isTransitioning: false,
     volume: 0.5,
     isMuted: false,
@@ -13,6 +14,7 @@ export const TVProvider = ({ children }) => {
     screenMode: 'color',
     isFirstBoot: true,
     crtEffectsEnabled: true, // New: CRT effects toggle
+    showPowerAnimation: false, // Track if power animation should show
   });
 
   const switchChannel = useCallback((channelNumber) => {
@@ -20,6 +22,7 @@ export const TVProvider = ({ children }) => {
 
     setState(prev => ({
       ...prev,
+      targetChannel: channelNumber, // Store target channel immediately
       isTransitioning: true,
       lastInteraction: Date.now(),
     }));
@@ -40,12 +43,23 @@ export const TVProvider = ({ children }) => {
       return {
         ...prev,
         isPoweredOn: willPowerOn,
+        showPowerAnimation: willPowerOn, // Show animation when powering on
         currentChannel: willPowerOn ? 99 : prev.currentChannel, // Go to home screen when powering on
         lastInteraction: Date.now(),
         isFirstBoot: false, // After first power-on, no longer first boot
       };
     });
-  }, []);
+
+    // Hide power animation after it completes
+    if (!state.isPoweredOn) {
+      setTimeout(() => {
+        setState(prev => ({
+          ...prev,
+          showPowerAnimation: false,
+        }));
+      }, 2000); // Match PowerAnimation duration
+    }
+  }, [state.isPoweredOn]);
 
   const setVolume = useCallback((volume) => {
     setState(prev => ({

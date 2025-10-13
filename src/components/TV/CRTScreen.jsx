@@ -5,6 +5,7 @@ import Scanlines from '../Effects/Scanlines';
 import StaticNoise from '../Effects/StaticNoise';
 import VHSDistortion from '../Effects/VHSDistortion';
 import PowerAnimation from '../Effects/PowerAnimation';
+import ChannelSwitchingAnimation from '../Effects/ChannelSwitchingAnimation';
 import ChannelIndicator from '../UI/ChannelIndicator';
 import VolumeBar from '../UI/VolumeBar';
 import LandingScreen from '../UI/LandingScreen';
@@ -14,6 +15,7 @@ import Channel2 from '../Channels/Channel2';
 import Channel3 from '../Channels/Channel3';
 import Channel4 from '../Channels/Channel4';
 import Channel5 from '../Channels/Channel5';
+import Channel6 from '../Channels/Channel6';
 import Channel404 from '../Channels/Channel404';
 import Channel0 from '../Channels/Channel0';
 import CRTFrame from './CRTFrame';
@@ -47,7 +49,8 @@ const CRTScreen = () => {
   }, [state.isPoweredOn, togglePower]);
 
   const renderChannel = () => {
-    if (!state.isPoweredOn) return null;
+    // Don't render channel content while power animation is showing
+    if (!state.isPoweredOn || state.showPowerAnimation) return null;
 
     switch (state.currentChannel) {
       case 99:
@@ -64,6 +67,8 @@ const CRTScreen = () => {
         return <Channel4 />;
       case 5:
         return <Channel5 />;
+      case 6:
+        return <Channel6 />;
       case 404:
         return <Channel404 />;
       default:
@@ -73,17 +78,8 @@ const CRTScreen = () => {
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-black">
-      {/* CRT TV Frame Border */}
-      <CRTFrame />
-
-      {/* Landing Screen / Power Off Screen */}
-      <LandingScreen 
-        isFirstBoot={state.isFirstBoot} 
-        isPoweredOn={state.isPoweredOn} 
-      />
-
-      {/* TV Frame - Wood texture */}
-      <div className="tv-frame absolute inset-0 p-6 sm:p-8 md:p-10 lg:p-12">
+      {/* TV Frame - Padding adjusted to show content inside frame */}
+      <div className="tv-frame absolute inset-0 p-8 sm:p-10 md:p-12 lg:p-14">
         
         {/* CRT Screen Container */}
         <div 
@@ -92,14 +88,20 @@ const CRTScreen = () => {
           }`}
         >
           
-          {/* Power Animation Overlay */}
-          {state.isPoweredOn && <PowerAnimation />}
+          {/* Landing Screen / Power Off Screen - Inside frame with CRT effects */}
+          <LandingScreen 
+            isFirstBoot={state.isFirstBoot} 
+            isPoweredOn={state.isPoweredOn} 
+          />
           
-          {/* Screen Content */}
+          {/* Power Animation Overlay - Shows when powering on (every time, not just first boot) */}
+          {state.showPowerAnimation && <PowerAnimation />}
+          
+          {/* Screen Content - Only show after power animation completes */}
           <div className={`relative w-full h-full ${state.isPoweredOn ? 'screen-glow' : ''}`}>
             
-            {/* Static Noise (shown during transitions) */}
-            {state.isTransitioning && <StaticNoise />}
+            {/* Channel Switching Animation - shown during transitions */}
+            {state.isTransitioning && <ChannelSwitchingAnimation currentChannel={state.targetChannel} />}
             
             {/* Channel Content */}
             <div className={`relative w-full h-full transition-opacity duration-300 ${
@@ -108,8 +110,8 @@ const CRTScreen = () => {
               {renderChannel()}
             </div>
             
-            {/* CRT Effects Overlays - Toggle based on settings */}
-            {state.isPoweredOn && state.crtEffectsEnabled && (
+            {/* CRT Effects Overlays - Show on landing screen, shutdown, and when powered on with effects enabled */}
+            {(state.isFirstBoot || !state.isPoweredOn || (state.isPoweredOn && state.crtEffectsEnabled)) && (
               <>
                 <Scanlines />
                 <VHSDistortion />
@@ -124,19 +126,11 @@ const CRTScreen = () => {
               </>
             )}
           </div>
-          
-          {/* Off Screen - Only show if not first boot */}
-          {!state.isPoweredOn && !state.isFirstBoot && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black">
-              <div className="text-gray-800 text-center px-4">
-                <p className="text-xs sm:text-sm opacity-50">
-                  Press SPACE or click Power to turn on
-                </p>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+      
+      {/* CRT TV Frame Border - Always on top */}
+      <CRTFrame />
     </div>
   );
 };

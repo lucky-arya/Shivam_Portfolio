@@ -26,10 +26,10 @@ const HomeScreen = ({ onChannelSelect }) => {
 
   // Social media links
   const socialLinks = [
-    { name: 'LinkedIn', icon: 'fa-linkedin', url: 'https://www.linkedin.com/in/your-profile', color: '#0077B5' },
-    { name: 'GitHub', icon: 'fa-github', url: 'https://github.com/your-username', color: '#333' },
-    { name: 'X (Twitter)', icon: 'fa-x-twitter', url: 'https://twitter.com/your-handle', color: '#1DA1F2' },
-    { name: 'Email', icon: 'fa-envelope', url: 'mailto:your.email@example.com', color: '#EA4335' }
+    { name: 'LinkedIn', icon: 'fa-linkedin', url: 'https://www.linkedin.com/in/shivam963v/', color: '#0077B5' },
+    { name: 'GitHub', icon: 'fa-github', url: 'https://github.com/lucky-arya', color: '#333' },
+    { name: 'X (Twitter)', icon: 'fa-x-twitter', url: 'https://twitter.com/shivam963v', color: '#1DA1F2' },
+    { name: 'Email', icon: 'fas fa-envelope', url: 'mailto:lklk112111@gmail.com', color: '#EA4335' }
   ];
 
   // Update time every second
@@ -223,6 +223,7 @@ const HomeScreen = ({ onChannelSelect }) => {
     return time.toLocaleTimeString('en-US', { 
       hour: '2-digit', 
       minute: '2-digit',
+      second: '2-digit',
       hour12: true 
     });
   };

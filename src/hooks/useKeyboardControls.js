@@ -39,6 +39,7 @@ export const useKeyboardControls = () => {
         case '3':
         case '4':
         case '5':
+        case '6':
           if (state.isPoweredOn && !isTyping) {
             goToChannel(parseInt(e.key));
           }

@@ -41,9 +41,9 @@ const Channel4 = () => {
 
   const experiences = [
     {
-      role: "Senior Full-Stack Developer",
-      company: "Tech Innovations Inc.",
-      period: "2022 - Present",
+      role: "Web Developer Intern",
+      company: "Cyber Secured India",
+      period: "April 2025 - October 2025",
       achievements: [
         "Led team of 5 developers on major product launch",
         "Improved application performance by 40%",
@@ -51,9 +51,9 @@ const Channel4 = () => {
       ]
     },
     {
-      role: "Full-Stack Developer",
-      company: "Digital Solutions Co.",
-      period: "2020 - 2022",
+      role: "Web Developer ",
+      company: "Booster Creative Hub",
+      period: "2025 - 2025",
       achievements: [
         "Built 10+ production applications",
         "Mentored junior developers",
@@ -65,9 +65,9 @@ const Channel4 = () => {
   const education = [
     {
       degree: "Bachelor of Computer Science",
-      school: "University of Technology",
-      year: "2020",
-      honors: "Graduated with Honors"
+      school: "MGMCOET, NOIDA",
+      year: "2023-2027",
+      honors: "Graduated with Honours"
     }
   ];
 
@@ -168,10 +168,35 @@ const Channel4 = () => {
             <div className="bg-green-500 text-white p-3 sm:p-4">
               <h2 className="text-lg sm:text-xl md:text-2xl font-black mb-2 sm:mb-3">🏆 CERTIFICATIONS</h2>
               <ul className="space-y-1.5 sm:space-y-2 font-semibold text-sm sm:text-base">
-                <li>✓ AWS Certified Developer</li>
-                <li>✓ React Advanced Certification</li>
-                <li>✓ Full-Stack Web Development</li>
+                <li>
+                  <a 
+                    href="/Resume/AWS-Certified-Developer.pdf" 
+                    download="AWS-Certified-Developer.pdf"
+                    className="hover:underline hover:text-yellow-300 transition-colors cursor-pointer inline-flex items-center gap-2"
+                  >
+                    ✓ AWS Certified Developer <span className="text-xs">📄</span>
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/Resume/React-Advanced-Certification.pdf" 
+                    download="React-Advanced-Certification.pdf"
+                    className="hover:underline hover:text-yellow-300 transition-colors cursor-pointer inline-flex items-center gap-2"
+                  >
+                    ✓ React Advanced Certification <span className="text-xs">📄</span>
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/Resume/Full-Stack-Web-Development.pdf" 
+                    download="Full-Stack-Web-Development.pdf"
+                    className="hover:underline hover:text-yellow-300 transition-colors cursor-pointer inline-flex items-center gap-2"
+                  >
+                    ✓ Full-Stack Web Development <span className="text-xs">📄</span>
+                  </a>
+                </li>
               </ul>
+              <p className="text-xs mt-2 opacity-80">💡 Click to download certificate PDFs</p>
             </div>
           </div>
         </div>
@@ -180,8 +205,8 @@ const Channel4 = () => {
         <div className="mt-4 sm:mt-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 sm:p-6 text-center rounded-lg border-2 sm:border-4 border-white">
           <h3 className="text-xl sm:text-2xl md:text-3xl font-black mb-3 sm:mb-4">📄 DOWNLOAD FULL RESUME</h3>
           <a 
-            href="/resume.pdf" 
-            download="YourName_Resume.pdf"
+            href="/Resume/resume shivam.pdf" 
+            download="Shivam_Kumar_Resume.pdf"
             className="inline-block bg-white text-black font-black text-base sm:text-lg md:text-xl px-6 sm:px-8 py-2 sm:py-3 rounded hover:bg-yellow-400 transition-colors transform hover:scale-105 touch-manipulation cursor-pointer"
           >
             📥 DOWNLOAD PDF
