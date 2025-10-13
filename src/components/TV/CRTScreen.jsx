@@ -16,6 +16,7 @@ import Channel4 from '../Channels/Channel4';
 import Channel5 from '../Channels/Channel5';
 import Channel404 from '../Channels/Channel404';
 import Channel0 from '../Channels/Channel0';
+import CRTFrame from './CRTFrame';
 
 const CRTScreen = () => {
   const { state, togglePower, switchChannel } = useTVContext();
@@ -72,6 +73,9 @@ const CRTScreen = () => {
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-black">
+      {/* CRT TV Frame Border */}
+      <CRTFrame />
+
       {/* Landing Screen / Power Off Screen */}
       <LandingScreen 
         isFirstBoot={state.isFirstBoot} 
@@ -79,7 +83,7 @@ const CRTScreen = () => {
       />
 
       {/* TV Frame - Wood texture */}
-      <div className="tv-frame absolute inset-0 p-4 sm:p-6 md:p-8 lg:p-12">
+      <div className="tv-frame absolute inset-0 p-6 sm:p-8 md:p-10 lg:p-12">
         
         {/* CRT Screen Container */}
         <div 
