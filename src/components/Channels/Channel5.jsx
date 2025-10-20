@@ -23,10 +23,10 @@ const Channel5 = () => {
 
   // Update these with your actual social media links
   const socialLinks = {
-    LinkedIn: 'https://www.linkedin.com/in/your-profile',
-    GitHub: 'https://github.com/your-username',
-    'X (Twitter)': 'https://twitter.com/your-handle',
-    Email: 'mailto:your.email@example.com'
+    LinkedIn: 'https://www.linkedin.com/in/shivam963v/',
+    GitHub: 'https://github.com/lucky-arya',
+    'X (Twitter)': 'https://twitter.com/shivam963v',
+    Email: 'mailto:lklk112111@gmail.com'
   };
 
   // Handle remote navigation
@@ -209,7 +209,7 @@ const Channel5 = () => {
       console.error('Contact form error:', error);
       // Better error message for development
       const errorMessage = error.message === 'API endpoint not available' 
-        ? 'Backend server is not running. Please start the server with "npm run server" or the form will work once deployed to Vercel.'
+        ? 'Backend server is not running. Please start the server.'
         : 'Failed to send message. Please try again later.';
       setSubmitStatus({ type: 'error', message: errorMessage });
     } finally {
@@ -231,7 +231,7 @@ const Channel5 = () => {
             📞 CALL NOW!
           </h1>
           <div className="bg-yellow-400 text-black text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-black py-3 sm:py-4 px-4 sm:px-6 inline-block transform rotate-2 border-2 sm:border-4 border-black">
-            +917543927096-HIRE-ME
+            +917543927096
           </div>
           <p className="text-xl sm:text-2xl md:text-3xl text-white font-bold mt-3 sm:mt-4 drop-shadow-lg px-2">
             ⚡ Operators Standing By! ⚡
