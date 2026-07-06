@@ -41,9 +41,9 @@ const Channel2 = () => {
 
   const projects = [
     {
-      name: "Amazing Project Alpha",
+      name: "CRT-PORTFOLIO",
       tagline: "Revolutionary! Groundbreaking! Must-See!",
-      features: ["Feature 1", "Feature 2", "Feature 3"],
+      features: ["unique Concept", "Feature 2", "Feature 3"],
       tech: "React, Node.js, MongoDB"
     },
     {
